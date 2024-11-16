@@ -27,18 +27,14 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
 
-      - name: Create target directory
-        run: mkdir -p target
-
       - name: Build with Maven
-        run: mvn clean package -X
+        run: |
+          mvn clean package -X > build.log 2>&1
+          cat build.log
 
-      - name: List target directory
-        run: ls -la target
-
-      - name: Upload Artifact
+      - name: Upload Build Log
         uses: actions/upload-artifact@v4
         with:
-          name: izpack-installer
-          path: target/the-example-installer.jar
-          if-no-files-found: error
+          name: build-log
+          path: build.log
+
