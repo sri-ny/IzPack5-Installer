@@ -6,7 +6,8 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: IzPack Installer
+name: Build IzPack Installer
+
 on:
   push:
     branches:
@@ -18,13 +19,13 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up JDK
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '8'
+          java-version: '11'
 
       - name: Build with Maven
         run: mvn clean package
@@ -32,6 +33,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: my-artifact
-          path: target/*.jar
-          if-no-files: error
+          name: izpack-installer
+          path: target/the-example-installer.jar
+          if-no-files-found: error
+
